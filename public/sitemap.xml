@@ -2,24 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://www.clayoria.com/</loc>
+    <loc>http://localhost:5000/</loc>
   </url>
   <url>
-    <loc>https://www.clayoria.com/about-us</loc>
+    <loc>http://localhost:5000/about-us</loc>
   </url>
   <url>
-    <loc>https://www.clayoria.com/contact</loc>
+    <loc>http://localhost:5000/contact</loc>
   </url>
   <url>
-    <loc>https://www.clayoria.com/blog</loc>
+    <loc>http://localhost:5000/product</loc>
   </url>
   <url>
-    <loc>https://www.clayoria.com/product</loc>
+    <loc>http://localhost:5000/terms-of-service</loc>
   </url>
   <url>
-    <loc>https://www.clayoria.com/terms-of-service</loc>
-  </url>
-  <url>
-    <loc>https://www.clayoria.com/privacy-policy</loc>
+    <loc>http://localhost:5000/privacy-policy</loc>
   </url>
 </urlset>

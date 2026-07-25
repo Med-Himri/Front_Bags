@@ -1,6 +1,6 @@
-# robots.txt for https://oliveextra.com
+# robots.txt for https://zackluxury.com
 
 User-agent: *
 Allow: /
 
-Sitemap: https://oliveextra.com/sitemap.xml
+Sitemap: https://zackluxury.com/sitemap.xml

@@ -1,12 +1,12 @@
 const fs = require("fs");
 const path = require("path");
 
-const robotsTxt = `# robots.txt for https://oliveextra.com
+const robotsTxt = `# robots.txt for https://zackluxury.com
 
 User-agent: *
 Allow: /
 
-Sitemap: https://oliveextra.com/sitemap.xml
+Sitemap: https://zackluxury.com/sitemap.xml
 `;
 
 const filePath = path.join(__dirname, "./public/robots.txt");

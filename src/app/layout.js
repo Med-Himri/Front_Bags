@@ -20,7 +20,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://www.zackluxury.com"),
+  metadataBase: new URL("https://frontbags.vercel.app"),
   title: {
     default: "Zack Luxury | Premium Women's Handbags & Accessories",
     template: "%s | Zack Luxury",
@@ -33,7 +33,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.zackluxury.com",
+    url: "https://frontbags.vercel.app",
     siteName: "Zack Luxury",
   },
 };

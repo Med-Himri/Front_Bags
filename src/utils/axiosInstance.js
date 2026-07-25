@@ -3,9 +3,13 @@ import { checkTokenExpiry } from "../utils/checkTokenExpiry";
 import { logout } from "../redux/slices/adminSlice";
 import store from "../redux/store";
 // http://localhost:5000
-// https://back-clayoria.vercel.app
+// https://backbags.vercel.app
+const isProduction = window.location.hostname !== "localhost";
+
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: isProduction
+    ? "https://backbags.vercel.app"
+    : "http://localhost:5000",
 });
 
 axiosInstance.interceptors.request.use(
