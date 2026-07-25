@@ -2,7 +2,8 @@ import { ReduxProvider } from "@/redux/provider";
 import Script from "next/script";
 import "../components/style/globals.css";
 import { Jost, Cormorant_Garamond } from "next/font/google";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://frontbags.vercel.app"),
+  metadataBase: new URL("https://front-bags.vercel.app"),
   title: {
     default: "Zack Luxury | Premium Women's Handbags & Accessories",
     template: "%s | Zack Luxury",
@@ -33,7 +34,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://frontbags.vercel.app",
+    url: "https://front-bags.vercel.app",
     siteName: "Zack Luxury",
   },
 };
@@ -69,6 +70,8 @@ export default function RootLayout({ children }) {
         <ReduxProvider>
           {children}
         </ReduxProvider>
+
+        <ToastContainer position="top-right" autoClose={3000} />
       </body>
     </html>
   );
