@@ -4,10 +4,13 @@ import { logout } from "../redux/slices/adminSlice";
 import store from "../redux/store";
 // http://localhost:5000
 // https://backbags.vercel.app
-const axiosInstance = axios.create({
-  baseURL: "https://backbags.vercel.app",
-});
+const isProduction = window.location.hostname !== "localhost";
 
+const axiosInstance = axios.create({
+  baseURL: isProduction
+    ? "https://backbags.vercel.app"
+    : "http://localhost:5000",
+});
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
