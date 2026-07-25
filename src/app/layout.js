@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
 
         {/* Analytics - Strategy set to afterInteractive for LCP Optimization */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          src="https://www.googletagmanager.com/gtag/js?id=G-Z5B3C8HNNN"
           strategy="afterInteractive"
         />
         <Script id="zackluxury-analytics" strategy="afterInteractive">
@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX');
+            gtag('config', 'G-Z5B3C8HNNN');
           `}
         </Script>
 

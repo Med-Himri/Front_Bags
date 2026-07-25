@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { login, setAdminId } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { AiOutlineCalendar } from "react-icons/ai";
+import { Sparkles, Lock, Mail, ArrowRight } from "lucide-react";
 import { toast } from "react-toastify";
 
 export default function Login() {
@@ -30,11 +30,11 @@ export default function Login() {
       dispatch(login(res.data.token));
       dispatch(setAdminId(res.data.adminId));
       
-      toast.success(res.data.message || "Login successful!");
+      toast.success(res.data.message || "Welcome back!");
       router.push("/dashboard");
     } catch (err) {
       const errorMessage =
-        err.response?.data?.message || "Invalid email or password";
+        err.response?.data?.message || "Invalid credentials provided.";
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -43,88 +43,102 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-beige-100 via-blue-100 to-green-100 text-gray-800 p-4">
-      {/* Centered Login Card */}
-      <div className="flex flex-col items-center justify-center w-full max-w-[500px] p-8 space-y-6 bg-white/90 rounded-lg shadow-lg backdrop-blur-sm">
-        {/* Icon & Header */}
-        <div className="text-center mb-2">
-          <AiOutlineCalendar className="text-5xl text-indigo-300 mx-auto mb-3" />
-          <h2 className="text-3xl font-bold text-green-600">Welcome Back</h2>
-          <p className="text-gray-500 text-sm mt-1">
-            Log in to access your bookings securely
+    <div className="min-h-screen flex items-center justify-center bg-[#F9F6F0] p-6 selection:bg-[#D4AF37] selection:text-[#111111]">
+      {/* Background Soft Glow */}
+      <div className="fixed inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
+        <div className="w-[500px] h-[500px] bg-[#D4AF37]/10 blur-[120px] rounded-full" />
+      </div>
+
+      {/* Centered Luxury Card */}
+      <div className="relative w-full max-w-[480px] bg-white rounded-3xl p-8 lg:p-12 shadow-2xl border border-[#D4AF37]/30">
+        {/* Brand Identity / Header */}
+        <div className="text-center mb-8 space-y-3">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#626060] border border-[#D4AF37]/40 shadow-inner mb-1">
+            <Sparkles size={20} className="text-[#D4AF37]" />
+          </div>
+          
+          <h1 className="text-3xl font-serif font-light text-[#111111]">
+            Zack <span className="italic font-normal text-[#D4AF37]">Luxury</span>
+          </h1>
+          
+          <p className="text-xs font-medium tracking-wide uppercase text-[#626060]">
+            Portal Access & Concierge Management
           </p>
         </div>
 
+        {/* Error Notification */}
         {error && (
-          <div className="w-full p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md text-center">
+          <div className="mb-6 p-3 text-xs font-bold tracking-wide uppercase text-red-700 bg-red-50 border border-red-200 rounded-xl text-center">
             {error}
           </div>
         )}
 
         {/* Login Form */}
-        <form onSubmit={handleLogin} className="space-y-5 w-full">
-          <div>
+        <form onSubmit={handleLogin} className="space-y-6">
+          {/* Email Field */}
+          <div className="space-y-1.5">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-600 mb-1"
+              className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5 flex items-center gap-1.5"
             >
-              Email Address
+              <Mail size={12} className="text-[#D4AF37]" />
+              Direct Email
             </label>
             <input
               type="email"
               id="email"
-              placeholder="Enter your email"
+              placeholder="admin@zackluxury.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
-              className="w-full px-4 py-2 bg-blue-50 border border-blue-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 placeholder-gray-400 disabled:opacity-60 transition"
+              className="w-full py-3 px-1 bg-transparent border-b-2 border-[#111111]/20 focus:outline-none focus:border-[#D4AF37] transition-colors text-[#111111] placeholder:text-[#111111]/30 text-sm font-medium disabled:opacity-50"
             />
           </div>
 
-          <div>
+          {/* Password Field */}
+          <div className="space-y-1.5">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-600 mb-1"
+              className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5 flex items-center gap-1.5"
             >
-              Password
+              <Lock size={12} className="text-[#D4AF37]" />
+              Passcode
             </label>
             <input
               type="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder="••••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
-              className="w-full px-4 py-2 bg-blue-50 border border-blue-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 placeholder-gray-400 disabled:opacity-60 transition"
+              className="w-full py-3 px-1 bg-transparent border-b-2 border-[#111111]/20 focus:outline-none focus:border-[#D4AF37] transition-colors text-[#111111] placeholder:text-[#111111]/30 text-sm font-medium disabled:opacity-50"
             />
           </div>
 
+          {/* Action Button */}
           <motion.button
             type="submit"
             disabled={loading}
-            whileHover={{ scale: loading ? 1 : 1.02 }}
-            whileTap={{ scale: loading ? 1 : 0.98 }}
-            className="w-full py-2.5 px-4 bg-green-500 text-white font-semibold rounded-md shadow-md hover:bg-green-600 disabled:bg-green-300 disabled:cursor-not-allowed transition duration-300"
+            whileHover={{ scale: loading ? 1 : 1.01 }}
+            whileTap={{ scale: loading ? 1 : 0.99 }}
+            className="w-full py-4 mt-2 rounded-xl text-[#111111] font-bold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 bg-[#D4AF37] hover:bg-[#b8972e] shadow-md disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
-            {loading ? "Logging in..." : "Log In"}
+            <span>{loading ? "Authenticating..." : "Authorize Sign In"}</span>
+            {!loading && <ArrowRight size={14} className="text-[#111111]" />}
           </motion.button>
         </form>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-center text-gray-500 text-sm mt-4"
-        >
+        {/* Footer Link */}
+        <div className="text-center mt-8 pt-6 border-t border-[#111111]/10">
           <Link
             href="/sendmail"
-            className="text-green-600 hover:underline font-medium"
+            className="text-[11px] font-bold uppercase tracking-wider text-[#626060] hover:text-[#D4AF37] transition-colors"
           >
-            Forgot password?
+            Forgot your passcode?
           </Link>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

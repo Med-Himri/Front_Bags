@@ -58,7 +58,7 @@ const Select = ({
 
                   {/* Active Indicator Line */}
                   {isActive && (
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/3 h-[2px] bg-[#D4AF37] rounded-full" />
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/3 h-0.5 bg-[#D4AF37] rounded-full" />
                   )}
                 </li>
               );

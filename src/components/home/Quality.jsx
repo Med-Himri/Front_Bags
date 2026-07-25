@@ -69,7 +69,7 @@ export function Quality() {
         <div className="mb-32">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 relative">
             {/* Desktop Connecting Line */}
-            <div className="hidden lg:block absolute top-6 left-0 right-0 h-[1px] bg-gradient-to-r from-[#D4AF37]/60 to-transparent" aria-hidden="true" />
+            <div className="hidden lg:block absolute top-6 left-0 right-0 h-px bg-linear-to-r from-[#D4AF37]/60 to-transparent" aria-hidden="true" />
 
             {processSteps.map((item, index) => (
               <div key={index} className="relative group">

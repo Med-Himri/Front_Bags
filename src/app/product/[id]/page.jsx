@@ -264,7 +264,7 @@ export default async function ProductPage({ params }) {
               {/* Minimal Trust Features */}
               <div className="pt-6 border-t border-[#D9C3B0]/30 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">
-                  <div className="bg-white p-2 rounded-xl border border-[#D9C3B0]/30 text-[#C87A53] flex-shrink-0">
+                  <div className="bg-white p-2 rounded-xl border border-[#D9C3B0]/30 text-[#C87A53] shrink-0">
                     <Box size={14} />
                   </div>
                   <div className="space-y-0.5">
@@ -279,7 +279,7 @@ export default async function ProductPage({ params }) {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="bg-white p-2 rounded-xl border border-[#D9C3B0]/30 text-[#C87A53] flex-shrink-0">
+                  <div className="bg-white p-2 rounded-xl border border-[#D9C3B0]/30 text-[#C87A53] shrink-0">
                     <ShieldCheck size={14} />
                   </div>
                   <div className="space-y-0.5">

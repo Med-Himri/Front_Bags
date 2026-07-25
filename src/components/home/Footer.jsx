@@ -124,7 +124,7 @@ export function Footer() {
                 <li className="flex items-start gap-2.5 text-xs text-[#FAFAFA]/70 font-medium">
                   <MapPin
                     size={14}
-                    className="text-[#D4AF37] flex-shrink-0 mt-0.5"
+                    className="text-[#D4AF37] shrink-0 mt-0.5"
                   />
                   <span>
                     Casablanca, Morocco <br />
@@ -134,7 +134,7 @@ export function Footer() {
                   </span>
                 </li>
                 <li className="flex items-center gap-2.5 text-xs text-[#FAFAFA]/70 font-medium">
-                  <Phone size={14} className="text-[#D4AF37] flex-shrink-0" />
+                  <Phone size={14} className="text-[#D4AF37] shrink-0" />
                   <a
                     href="tel:+212600000000"
                     className="hover:text-[#D4AF37] transition-colors"
@@ -143,7 +143,7 @@ export function Footer() {
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5 text-xs text-[#FAFAFA]/70 font-medium">
-                  <Mail size={14} className="text-[#D4AF37] flex-shrink-0" />
+                  <Mail size={14} className="text-[#D4AF37] shrink-0" />
                   <a
                     href="mailto:contact@zackluxury.com"
                     className="hover:text-[#D4AF37] transition-colors truncate"

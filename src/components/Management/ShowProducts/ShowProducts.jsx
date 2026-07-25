@@ -52,19 +52,19 @@ const ShowProductRequests = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to remove this piece from the catalog?")) {
-      return;
-    }
     setActionLoadingId(id);
     try {
       await rejectProductAPI(id);
+      toast.success("Product deleted successfully.");
       await getAllProductRequests();
     } catch (err) {
       console.error("Error deleting product:", err);
+      toast.error("Failed to delete product.");
     } finally {
       setActionLoadingId(null);
     }
   };
+
 
   const handleEditClick = (id) => {
     setEditingProductId(id);
@@ -130,7 +130,7 @@ const ShowProductRequests = () => {
               >
                 {/* Product Thumbnail and Details */}
                 <div className="flex items-center gap-4 flex-1 min-w-0">
-                  <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-[#F9F6F0] border border-[#D4AF37]/30 flex-shrink-0">
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-[#F9F6F0] border border-[#D4AF37]/30 shrink-0">
                     <Image
                       fill
                       src={product.mainImage?.url || "/placeholder.jpg"}
@@ -187,11 +187,10 @@ const ShowProductRequests = () => {
                   <button
                     onClick={() => handleAccept(product._id)}
                     disabled={product.accepted || isProcessing}
-                    className={`flex-1 md:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 border cursor-pointer ${
-                      product.accepted
+                    className={`flex-1 md:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 border cursor-pointer ${product.accepted
                         ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
                         : "bg-[#111111] text-[#F9F6F0] border-[#111111] hover:bg-[#D4AF37] hover:text-[#111111] hover:border-[#D4AF37] shadow-xs"
-                    }`}
+                      }`}
                   >
                     {isProcessing ? (
                       <Loader2 size={13} className="animate-spin text-[#D4AF37]" />

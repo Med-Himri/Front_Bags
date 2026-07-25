@@ -72,7 +72,7 @@ export default function CartPage() {
                   className="bg-white rounded-2xl p-6 flex flex-col sm:flex-row gap-6 shadow-sm border border-[#D4AF37]/20 transition-all hover:shadow-md"
                 >
                   {/* IMAGE */}
-                  <div className="relative w-full sm:w-36 h-36 rounded-xl overflow-hidden bg-[#F9F6F0] flex-shrink-0 border border-gray-100">
+                  <div className="relative w-full sm:w-36 h-36 rounded-xl overflow-hidden bg-[#F9F6F0] shrink-0 border border-gray-100">
                     <Image
                       src={item.image}
                       alt={item.title}

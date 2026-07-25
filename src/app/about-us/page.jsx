@@ -171,15 +171,15 @@ const AboutUs = () => {
             <h3 className="text-xl font-serif font-medium text-[#1A1A1A]">Our Commitments</h3>
             <ul className="space-y-4 text-xs font-medium tracking-wide">
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24B] mt-1.5 flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24B] mt-1.5 shrink-0" />
                 <span>Careful quality checks before any product reaches our catalog.</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24B] mt-1.5 flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24B] mt-1.5 shrink-0" />
                 <span>Secure, protective packaging for every order that ships out.</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24B] mt-1.5 flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24B] mt-1.5 shrink-0" />
                 <span>Transparent product details so you know exactly what you're buying.</span>
               </li>
             </ul>
