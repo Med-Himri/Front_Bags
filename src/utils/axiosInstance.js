@@ -8,7 +8,7 @@ import store from "../redux/store";
 const isProduction = typeof window !== "undefined" && window.location.hostname !== "localhost";
 
 const axiosInstance = axios.create({
-  baseURL: isProduction ? "https://back-bags.vercel.app" : "http://localhost:5000",
+  baseURL: isProduction ? "https://back-bags.vercel.app/" : "http://localhost:5000",
 });
 axiosInstance.interceptors.request.use(
   (config) => {
