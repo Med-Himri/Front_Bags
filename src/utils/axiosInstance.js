@@ -4,12 +4,8 @@ import { logout } from "../redux/slices/adminSlice";
 import store from "../redux/store";
 // http://localhost:5000
 // https://backbags.vercel.app
-const isProduction = window.location.hostname !== "localhost";
-
 const axiosInstance = axios.create({
-  baseURL: isProduction
-    ? "https://backbags.vercel.app"
-    : "http://localhost:5000",
+  baseURL: "https://backbags.vercel.app",
 });
 
 axiosInstance.interceptors.request.use(
