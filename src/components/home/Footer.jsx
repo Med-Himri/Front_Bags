@@ -52,7 +52,7 @@ export function Footer() {
               >
                 <FiLinkedin size={18} />
               </a>
-                  <a
+              <a
                 href="https://www.facebook.com"
                 aria-label="Follow Zack Luxury on Facebook"
                 className="text-[#FAFAFA]/60 hover:text-[#D4AF37] transition-colors duration-300 transform hover:scale-110"
@@ -70,40 +70,41 @@ export function Footer() {
                 Navigation
               </p>
               <ul className="space-y-3">
-                {["Home", "About Us", "Collections", "Journal", "Contact"].map(
-                  (link) => (
-                    <li key={link}>
-                      <a
-                        href={`/${link.toLowerCase().replace(/\s+/g, "-")}`}
-                        className="text-sm text-[#FAFAFA]/70 hover:text-[#D4AF37] transition-colors duration-300 font-medium"
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  )
-                )}
+                {[
+                  { label: "Home", href: "/" },
+                  { label: "About Us", href: "/about-us" },
+                  { label: "Shop", href: "/product" },
+                  { label: "Contact", href: "/contact" },
+                ].map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-[#FAFAFA]/70 hover:text-[#D4AF37] transition-colors duration-300 font-medium"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Column 2: Curated Collections */}
+            {/* Column 2: Shop */}
+            {/* NOTE: these three items were placeholder "collection" names with no
+    matching products or category pages behind them — that's why they
+    404'd. Until you build real category filtering on /product, all
+    three just point to the general shop page so they at least work. */}
             <div className="space-y-5">
               <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">
-                Collections
+                Shop
               </p>
               <ul className="space-y-3">
-                {[
-                  "Bespoke Leatherwear",
-                  "Scorpion Emblem Series",
-                  "Crown Heritage Collection",
-                ].map((product) => (
-                  <li key={product} className="group/item">
+                {["New Arrivals", "Best Sellers", "All Products"].map((label) => (
+                  <li key={label} className="group/item">
                     <a
-                      href={`/product/${product
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
+                      href="/product"
                       className="text-xs text-[#FAFAFA]/70 hover:text-[#D4AF37] transition-colors duration-300 font-normal flex items-center gap-1"
                     >
-                      <span>{product}</span>
+                      <span>{label}</span>
                       <ArrowUpRight
                         size={10}
                         className="opacity-0 group-hover/item:opacity-100 transition-opacity text-[#D4AF37]"

@@ -10,14 +10,14 @@ export function ProductGallery({ mainImage, gallery, title, hasDiscount, discoun
   return (
     <div className="lg:col-span-6 space-y-4">
       {/* الصورة الكبيرة الرئيسية */}
-      <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-[#F2EDE4]/40 border border-[#D9C3B0]/30 shadow-xs group">
+      <div className="relative aspect-3/4 w-full rounded-2xl overflow-hidden bg-[#F2EDE4]/40 border border-[#D9C3B0]/30 shadow-xs group">
         <Image
           src={activeImage}
           alt={`ClayOria Fine Ceramic Masterpiece - ${title}`}
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="object-cover transform scale-100 group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out animate-in fade-in duration-300"
+          className="object-cover transform scale-100 group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out animate-in fade-in"
         />
         {hasDiscount && (
           <div className="absolute top-4 left-4 bg-[#C87A53] text-white px-3 py-1 rounded-xl text-[9px] font-bold tracking-wider uppercase shadow-md">
@@ -35,7 +35,7 @@ export function ProductGallery({ mainImage, gallery, title, hasDiscount, discoun
             <button
               key={i}
               onClick={() => setActiveImage(img.url)}
-              className={`w-16 h-16 rounded-xl border bg-white overflow-hidden transition-all duration-300 flex-shrink-0 relative ${
+              className={`w-16 h-16 rounded-xl border bg-white overflow-hidden transition-all duration-300 shrink-0 relative ${
                 isSelected 
                   ? "border-[#C87A53] ring-2 ring-[#C87A53]/20 scale-95" 
                   : "border-[#D9C3B0]/30 hover:border-[#C87A53]"

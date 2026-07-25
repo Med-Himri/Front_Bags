@@ -9,7 +9,7 @@ import Link from "next/link";
 // ================= PRO SEO & ISR PERFORMANCE =================
 async function fetchProduct(id) {
   try {
-    const res = await fetch(`http://localhost:5000/api/product/${id}`, {
+    const res = await fetch(`https://back-bags.vercel.app/api/product/${id}`, {
       next: { revalidate: 60 }, // Incremental Static Regeneration (ISR)
     });
     if (!res.ok) return null;
@@ -23,7 +23,7 @@ async function fetchProduct(id) {
 export async function generateMetadata({ params }) {
   const { id } = await params;
   const product = await fetchProduct(id);
-  const baseUrl = "http://localhost:5000"; // Replace with your actual base URL
+  const baseUrl = "https://back-bags.vercel.app"; // Replace with your actual base URL
 
   if (!product) {
     return {
@@ -112,7 +112,7 @@ export default async function ProductPage({ params }) {
     brand: { "@type": "Brand", name: "ClayOria" },
     offers: {
       "@type": "Offer",
-      url: `https://www.clayoria.com/product/${product.slug || id}`,
+      url: `https://back-bags.vercel.app/product/${product.slug || id}`,
       priceCurrency: "USD",
       price: String(product.discountPrice || product.price),
       priceValidUntil: "2027-12-31",
@@ -133,19 +133,19 @@ export default async function ProductPage({ params }) {
         "@type": "ListItem",
         position: 1,
         name: "Atelier",
-        item: "https://www.clayoria.com/product",
+        item: "https://back-bags.vercel.app/product",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: product.category || "Ceramics",
-        item: `https://www.clayoria.com/product`,
+        item: `https://back-bags.vercel.app/product`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: product.title,
-        item: `https://www.clayoria.com/product/${product.slug || id}`,
+        item: `https://back-bags.vercel.app/product/${product.slug || id}`,
       },
     ],
   };
