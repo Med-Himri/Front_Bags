@@ -27,12 +27,12 @@ export async function generateMetadata({ params }) {
 
   if (!product) {
     return {
-      title: "Collection Piece Not Found | ClayOria",
+      title: "Collection Piece Not Found | Zack Luxury",
       robots: { index: false, follow: false },
     };
   }
 
-  const title = `${product.metaTitle || product.title} | ClayOria Atelier`;
+  const title = `${product.metaTitle || product.title} | Zack Luxury`;
   const description = (
     product.metaDescription ||
     product.shortDescription ||
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }) {
       description,
       type: "website", // 🚀 تم الإصلاح هنا: Next.js كيقبل website، والبيانات د البروداكت غاتمشي ف other
       url: productUrl,
-      siteName: "ClayOria",
+      siteName: "Zack Luxury",
       images: [{ url: imageUrl, width: 1200, height: 630, alt: product.title }],
     },
     twitter: {
@@ -109,7 +109,7 @@ export default async function ProductPage({ params }) {
     description: product.shortDescription || "",
     sku: product.sku || id,
     mpn: product.sku || id,
-    brand: { "@type": "Brand", name: "ClayOria" },
+    brand: { "@type": "Brand", name: "Zack Luxury" },
     offers: {
       "@type": "Offer",
       url: `https://back-bags.vercel.app/product/${product.slug || id}`,
@@ -205,10 +205,6 @@ export default async function ProductPage({ params }) {
                 <span className="bg-[#C87A53]/10 text-[#C87A53] px-3 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider">
                   {product.category}
                 </span>
-                <div className="flex items-center gap-1.5 text-[#2C3E35] text-[9px] font-bold uppercase tracking-wider bg-[#2C3E35]/5 px-2.5 py-1 rounded-lg">
-                  <Sparkles size={11} className="text-[#C87A53]" />
-                  <span>Safi Certified Variant</span>
-                </div>
               </div>
 
               <h1 className="text-3xl md:text-4xl font-serif font-light tracking-tight text-[#2D2522] leading-tight">

@@ -1,120 +1,68 @@
-import axiosInstance from "../utils/axiosInstance";
+const express = require("express");
 
-export const createBlogAPI = async (data) => {
-  if (typeof window === "undefined") return;
-  const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) {
-    throw new Error("User is not logged in");
-  }
+const { verifyToken } = require("../middlewares/authMiddleware");
 
-  const {
-    postTitle,
-    slug,
-    category,
-    tags,
-    metaTitle,
-    metaDescription,
-    featuredImageAlt,
-    content,
-    featuredImage,
-    galleryItems,
-  } = data;
+const router = express.Router();
 
-  try {
-    const formData = new FormData();
-    formData.append("postTitle", postTitle);
-    formData.append("slug", slug);
-    formData.append("category", category);
-    formData.append("tags", tags);
-    formData.append("metaTitle", metaTitle);
-    formData.append("metaDescription", metaDescription);
-    formData.append("featuredImageAlt", featuredImageAlt);
-    formData.append("content", content);
-    formData.append("featuredImage", featuredImage);
+const multer = require("multer");
+const {
+  getProductSitemapCtrl,
+  getLastProductsCtrl,
+  getProductsCtrl,
+  getAllProductsCtrl,
+  getSingleProductCtrl,
+  getProductByIdCtrl,   // added
+  rejectProductCtrl,
+  acceptProductCtrl,
+  createProductCtrl,
+  updateProductCtrl,    // added
+  createAIProductCtrl,
+} = require("../controllers/productController");
+const upload = multer({ dest: "/tmp/images/" });
 
-    if (galleryItems && galleryItems.length > 0) {
-      const galleryMeta = [];
+/* ================= PUBLIC ROUTES ================= */
+router.get("/", getProductSitemapCtrl);
+router.get("/getlastProducts", getLastProductsCtrl);
+router.get("/getproducts", getProductsCtrl);
+router.get("/getallproducts", getAllProductsCtrl);
+router.get("/:slug", getSingleProductCtrl);
 
-      galleryItems.forEach((item) => {
-        formData.append("galleryImages", item.file);
+/* ================= PROTECTED ROUTES ================= */
+router.use(verifyToken);
 
-        galleryMeta.push({
-          alt: item.alt,
-          index: item.index ? parseInt(item.index, 10) : null,
-        });
-      });
-      formData.append("galleryMeta", JSON.stringify(galleryMeta));
-    }
+// Admin lookup by id — ignores accepted status, used by the edit screen.
+// Safe to place here: "/admin/:id" is two path segments, so it never
+// collides with the single-segment "/:slug" route above.
+router.get("/admin/:id", getProductByIdCtrl);
 
-    const response = await axiosInstance.post("/api/blog/AddBlog", formData, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+router.post(
+  "/createaiproduct",
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "galleryImages", maxCount: 10 }, // was "gallery" — didn't match createAIProductAPI or createAIProductCtrl, which both use galleryImages
+  ]),
+  createAIProductCtrl
+);
+router.post(
+  "/addproduct",
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "gallery", maxCount: 10 },
+  ]),
+  createProductCtrl
+);
 
-    return response;
-  } catch (error) {
-    console.error("Error during blog creation:", error);
-    throw error;
-  }
-};
+// Update — same id-in-body pattern as /delete and /acceptproduct below
+router.post(
+  "/updateproduct",
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "gallery", maxCount: 10 },
+  ]),
+  updateProductCtrl
+);
 
-export const createAIProductAPI = async (data) => {
-  if (typeof window === "undefined") return;
-  const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) {
-    throw new Error("User is not logged in");
-  }
+router.post("/delete", rejectProductCtrl);
+router.post("/acceptproduct", acceptProductCtrl);
 
-  // Hna bedelna l-variables bash imchiw m3a l-form dyal l-product
-  const {
-    productName,
-    price,
-    discountPrice,
-    mainImage,
-    galleryItems,
-  } = data;
-
-  try {
-    const formData = new FormData();
-    formData.append("productName", productName);
-    formData.append("price", price);
-    
-    // Nsifto discountPrice ghir ila kan m3mer
-    if (discountPrice) {
-      formData.append("discountPrice", discountPrice);
-    }
-    
-    // T2ked bli dima kayna image 7it drnaha required f l-front
-    if (mainImage) {
-      formData.append("mainImage", mainImage);
-    }
-
-    if (galleryItems && galleryItems.length > 0) {
-      const galleryMeta = [];
-
-      galleryItems.forEach((item) => {
-        formData.append("galleryImages", item.file);
-
-        galleryMeta.push({
-          alt: item.alt || "",
-          index: item.index ? parseInt(item.index, 10) : null,
-        });
-      });
-      formData.append("galleryMeta", JSON.stringify(galleryMeta));
-    }
-
-    // ⚠️ Endpoint jdid dyal AI Product (T2ked bli howa hada li 3ndk f l-backend)
-    const response = await axiosInstance.post("/api/product/createaiproduct", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    return response;
-  } catch (error) {
-    console.error("Error during AI product creation:", error);
-    throw error;
-  }
-};
+module.exports = router;

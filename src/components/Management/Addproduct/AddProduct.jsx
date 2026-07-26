@@ -222,7 +222,7 @@ export default function AddProductCMS() {
 
             {/* Rich Editor */}
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-widest text-[#626060] mb-2 flex items-center gap-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-[#626060] mb-2 flex items-center gap-1.5">
                 <FileText size={14} className="text-[#D4AF37]" /> Full Craftsmanship Story
               </label>
               <div className="rounded-xl overflow-hidden border border-[#D4AF37]/20">
