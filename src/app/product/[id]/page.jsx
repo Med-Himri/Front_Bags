@@ -213,11 +213,15 @@ export default async function ProductPage({ params }) {
 
               <div className="flex items-baseline gap-3 pt-3 border-t border-[#D9C3B0]/30">
                 <span className="text-3xl font-serif font-light tracking-tight text-[#2D2522]">
-                  ${hasDiscount ? product.discountPrice : product.price}
+                  {hasDiscount ? product.discountPrice : product.price} <span className="text-2xl font-serif font-light tracking-tight text-[#2D2522]">
+                      DH
+                    </span>
                 </span>
                 {hasDiscount && (
                   <span className="text-base text-[#2D2522]/40 line-through decoration-[#C87A53]/40">
-                    ${product.price}
+                    {product.price}  <span className="text-2xl font-serif font-light tracking-tight text-[#2D2522]">
+                      DH
+                    </span>
                   </span>
                 )}
                 <span className="text-[10px] font-bold text-[#2D2522]/40 uppercase tracking-wider">

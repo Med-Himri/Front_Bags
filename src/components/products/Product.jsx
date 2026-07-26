@@ -101,11 +101,10 @@ function ProductsPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2.5 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-300 border ${
-                  activeCategory === cat
+                className={`px-6 py-2.5 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-300 border ${activeCategory === cat
                     ? "bg-[#111111] text-[#F9F6F0] border-[#111111] shadow-md shadow-[#111111]/10 scale-[1.02]"
                     : "bg-white text-[#626060] border-[#D4AF37]/30 hover:border-[#D4AF37] hover:text-[#111111]"
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -192,7 +191,9 @@ function ProductsPage() {
                           </p>
                           <div className="flex items-baseline gap-1">
                             <span className="text-[#111111] text-2xl font-serif font-medium tracking-tight">
-                              ${product.discountPrice || product.price}
+                              {product.discountPrice || product.price}  <span className="text-xl font-serif font-light tracking-tight text-[#2D2522]">
+                                DH
+                              </span>
                             </span>
                             <span className="text-[#626060] text-[10px] font-medium lowercase">
                               /
