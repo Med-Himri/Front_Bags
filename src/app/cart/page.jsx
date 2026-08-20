@@ -288,7 +288,7 @@ export default function CartPage() {
                             {item.title}
                           </h3>
                           <p className="text-lg font-medium text-[#111111]">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            {(item.price * item.quantity).toFixed(2)} DH
                           </p>
                         </div>
                         {(item.color || item.size) && (
@@ -349,7 +349,7 @@ export default function CartPage() {
                   <div className="flex justify-between text-[#F9F6F0]/80">
                     <span>Subtotal</span>
                     <span className="font-medium text-[#F9F6F0]">
-                      ${subtotal.toFixed(2)}
+                      {subtotal.toFixed(2)} DH
                     </span>
                   </div>
 
@@ -363,7 +363,7 @@ export default function CartPage() {
                   <div className="pt-6 mt-6 border-t border-white/10 flex justify-between text-2xl font-serif">
                     <span>Total</span>
                     <span className="text-[#D4AF37] font-medium">
-                      ${subtotal.toFixed(2)}
+                      {subtotal.toFixed(2)} DH
                     </span>
                   </div>
                 </div>

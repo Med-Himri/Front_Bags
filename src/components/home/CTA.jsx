@@ -202,7 +202,6 @@
 //   );
 // }
 
-
 "use client";
 
 import React, { useState } from "react";
@@ -210,14 +209,12 @@ import { ArrowRight, Mail, Phone, CheckCircle, Globe, Sparkles } from "lucide-re
 
 // Your real business number, formatted for wa.me (country code + number,
 // no +, no spaces, no dashes)
-const WHATSAPP_NUMBER = "212628395183"; // <-- replace with your real number
+const WHATSAPP_NUMBER = "212619805905";
 
 export function CTA() {
   const [form, setForm] = useState({
-    company: "",
     name: "",
-    email: "",
-    country: "",
+    cityAddress: "",
     message: "",
   });
   const [succeeded, setSucceeded] = useState(false);
@@ -231,10 +228,8 @@ export function CTA() {
     const lines = [
       `New inquiry from Zack Luxury website`,
       ``,
-      form.company ? `Company/Client: ${form.company}` : null,
       `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      form.country ? `Country: ${form.country}` : null,
+      form.cityAddress ? `City/Address: ${form.cityAddress}` : null,
       ``,
       `Message:`,
       form.message,
@@ -246,7 +241,7 @@ export function CTA() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.message) {
+    if (!form.name || !form.message) {
       return;
     }
 
@@ -272,7 +267,7 @@ export function CTA() {
                 <div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 px-4 py-1.5 rounded-full border border-[#D4AF37]/40">
                   <Globe size={13} className="text-[#D4AF37]" aria-hidden="true" />
                   <span className="text-[#FAFAFA] text-[10px] font-bold uppercase tracking-widest">
-                    Global Concierge
+                    Morocco Delivery
                   </span>
                 </div>
 
@@ -282,7 +277,7 @@ export function CTA() {
                 </h2>
 
                 <p className="text-[#FAFAFA]/85 text-sm leading-relaxed font-normal">
-                  Connect with our personal concierge. We arrange bespoke leathercraft allocations, custom monogramming, and express international delivery for private clients and luxury retailers.
+                  Reach out directly for questions about our handbags, sizing, or delivery across Morocco. We're happy to help you find the right piece.
                 </p>
 
                 <div className="space-y-6 pt-6 border-t border-white/20">
@@ -339,7 +334,7 @@ export function CTA() {
                   <button
                     onClick={() => {
                       setSucceeded(false);
-                      setForm({ company: "", name: "", email: "", country: "", message: "" });
+                      setForm({ name: "", cityAddress: "", message: "" });
                     }}
                     className="px-6 py-3 rounded-xl border border-[#D4AF37] text-[#111111] hover:bg-[#D4AF37] transition-all text-xs font-bold tracking-wide uppercase"
                   >
@@ -358,23 +353,8 @@ export function CTA() {
                   <form onSubmit={handleSubmit} className="space-y-8">
                     <div className="grid md:grid-cols-2 gap-8">
                       <div className="space-y-1.5">
-                        <label htmlFor="company" className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5">
-                          Company / Client Name
-                        </label>
-                        <input
-                          id="company"
-                          name="company"
-                          type="text"
-                          autoComplete="organization"
-                          value={form.company}
-                          onChange={handleChange}
-                          className="w-full py-3 bg-transparent border-b-2 border-[#111111]/20 focus:outline-none focus:border-[#D4AF37] transition-colors text-[#111111] placeholder:text-[#111111]/40 text-sm font-medium"
-                          placeholder="Boutique Luxury Ltd"
-                        />
-                      </div>
-                      <div className="space-y-1.5">
                         <label htmlFor="full-name" className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5">
-                          Representative Name
+                          Full Name
                         </label>
                         <input
                           id="full-name"
@@ -385,47 +365,28 @@ export function CTA() {
                           value={form.name}
                           onChange={handleChange}
                           className="w-full py-3 bg-transparent border-b-2 border-[#111111]/20 focus:outline-none focus:border-[#D4AF37] transition-colors text-[#111111] placeholder:text-[#111111]/40 text-sm font-medium"
-                          placeholder="Elena Rossi"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-8">
-                      <div className="space-y-1.5">
-                        <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5">
-                          Direct Email
-                        </label>
-                        <input
-                          id="email"
-                          name="email"
-                          required
-                          type="email"
-                          autoComplete="email"
-                          value={form.email}
-                          onChange={handleChange}
-                          className="w-full py-3 bg-transparent border-b-2 border-[#111111]/20 focus:outline-none focus:border-[#D4AF37] transition-colors text-[#111111] placeholder:text-[#111111]/40 text-sm font-medium"
-                          placeholder="elena@luxurybrand.com"
+                          placeholder="Sara Amrani"
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label htmlFor="country" className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5">
-                          Destination Country
+                        <label htmlFor="cityAddress" className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5">
+                          City / Address
                         </label>
                         <input
-                          id="country"
-                          name="country"
+                          id="cityAddress"
+                          name="cityAddress"
                           type="text"
-                          value={form.country}
+                          value={form.cityAddress}
                           onChange={handleChange}
                           className="w-full py-3 bg-transparent border-b-2 border-[#111111]/20 focus:outline-none focus:border-[#D4AF37] transition-colors text-[#111111] placeholder:text-[#111111]/40 text-sm font-medium"
-                          placeholder="France"
+                          placeholder="Casablanca, Maarif"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-1.5">
                       <label htmlFor="message" className="text-[10px] font-bold uppercase tracking-wider text-[#111111]/70 ml-0.5">
-                        Bespoke Requirements & Notes
+                        Your Message
                       </label>
                       <textarea
                         id="message"
@@ -435,7 +396,7 @@ export function CTA() {
                         value={form.message}
                         onChange={handleChange}
                         className="w-full py-3 bg-transparent border-b-2 border-[#111111]/20 focus:outline-none focus:border-[#D4AF37] transition-colors resize-none text-[#111111] placeholder:text-[#111111]/40 text-sm font-medium"
-                        placeholder="Detail your request for leather finishes, custom monograms, or order allocations..."
+                        placeholder="Tell us what you're looking for..."
                       ></textarea>
                     </div>
 

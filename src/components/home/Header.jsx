@@ -151,7 +151,7 @@ export function Header() {
                                 <p className="text-[11px] text-[#1A1A1A]/70 mt-1">
                                   Qty: {item.quantity} ×{" "}
                                   <span className="text-[#C9A24B] font-medium">
-                                    ${item.price}
+                                    {item.price} DH
                                   </span>
                                 </p>
                               </div>

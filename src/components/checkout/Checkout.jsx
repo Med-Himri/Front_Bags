@@ -45,10 +45,10 @@ export function Checkout() {
         (item) =>
           `- ${item.title}${item.color ? ` (${item.color})` : ""}${
             item.size ? ` - Size ${item.size}` : ""
-          } x${item.quantity} - $${item.price}`
+          } x${item.quantity} - ${item.price} DH`
       ),
       ``,
-      `Total: $${order.total}`,
+      `Total: ${order.total} DH`,
       order.notes ? `\nNotes: ${order.notes}` : null,
     ].filter(Boolean);
 
@@ -125,13 +125,13 @@ export function Checkout() {
               {item.size ? ` - Size ${item.size}` : ""} × {item.quantity}
             </span>
             <span className="text-[#1A1A1A] font-medium">
-              ${(item.price * item.quantity).toFixed(2)}
+              {(item.price * item.quantity).toFixed(2)} DH
             </span>
           </div>
         ))}
         <div className="flex justify-between pt-3 border-t border-[#C9A24B]/20 font-semibold text-[#1A1A1A]">
           <span>Total</span>
-          <span>${total.toFixed(2)}</span>
+          <span>{total.toFixed(2)} DH</span>
         </div>
       </div>
 
