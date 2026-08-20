@@ -25,7 +25,7 @@ export const metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://www.zackluxury.com/logo.png",
+        url: "https://frontbags.vercel.app/logo.png",
         width: 1200,
         height: 630,
         alt: "Zack Luxury - Premium Women's Handbags and Accessories",
@@ -38,11 +38,11 @@ export const metadata = {
     title: "Zack Luxury | Premium Women's Handbags Store",
     description:
       "Shop premium women's handbags and accessories. Timeless designs, quality craftsmanship, modern luxury.",
-    images: ["https://www.zackluxury.com/logo.png"],
+    images: ["https://frontbags.vercel.app/logo.png"],
   },
 
   alternates: {
-    canonical: "https://www.zackluxury.com/",
+    canonical: "https://frontbags.vercel.app/",
   },
 };
 

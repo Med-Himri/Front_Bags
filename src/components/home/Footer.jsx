@@ -139,7 +139,7 @@ export function Footer() {
                     href="tel:+212600000000"
                     className="hover:text-[#D4AF37] transition-colors"
                   >
-                    +212 600-000000
+                    +212 619-805905
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5 text-xs text-[#FAFAFA]/70 font-medium">
