@@ -9,7 +9,7 @@ import { clearCart } from "@/redux/slices/cartSlice"; // adjust action name if d
 
 // Your business WhatsApp number in international format, no +, no spaces
 // e.g. Morocco number 06 12 34 56 78 becomes "212612345678"
-const WHATSAPP_NUMBER = "212628395183"; // <-- replace with your real number
+const WHATSAPP_NUMBER = "212619805905"; // <-- replace with your real number
 
 export function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
