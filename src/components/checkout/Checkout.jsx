@@ -1,3 +1,4 @@
+
 // "use client";
 
 // import { useState } from "react";
@@ -9,7 +10,7 @@
 
 // // Your business WhatsApp number in international format, no +, no spaces
 // // e.g. Morocco number 06 12 34 56 78 becomes "212612345678"
-// const WHATSAPP_NUMBER = "212619805905"; // <-- replace with your real number
+// const WHATSAPP_NUMBER = "212619805905";
 
 // export function Checkout() {
 //   const cartItems = useSelector((state) => state.cart.items);
@@ -131,7 +132,7 @@
 //         ))}
 //         <div className="flex justify-between pt-3 border-t border-[#C9A24B]/20 font-semibold text-[#1A1A1A]">
 //           <span>Total</span>
-//           <span>{total.toFixed(2)} DH</span>
+//           <span>${total.toFixed(2)}</span>
 //         </div>
 //       </div>
 
@@ -217,7 +218,6 @@
 //     </div>
 //   );
 // }
-
 "use client";
 
 import { useState } from "react";
@@ -225,10 +225,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { MessageCircle, Loader2 } from "lucide-react";
 import axiosInstance from "@/utils/axiosInstance";
-import { clearCart } from "@/redux/slices/cartSlice"; // adjust action name if different
+import { clearCart } from "@/redux/slices/cartSlice";
 
-// Your business WhatsApp number in international format, no +, no spaces
-// e.g. Morocco number 06 12 34 56 78 becomes "212612345678"
 const WHATSAPP_NUMBER = "212619805905";
 
 export function Checkout() {
@@ -265,10 +263,10 @@ export function Checkout() {
         (item) =>
           `- ${item.title}${item.color ? ` (${item.color})` : ""}${
             item.size ? ` - Size ${item.size}` : ""
-          } x${item.quantity} - $${item.price}`
+          } x${item.quantity} - ${item.price} DH`
       ),
       ``,
-      `Total: $${order.total}`,
+      `Total: ${order.total} DH`,
       order.notes ? `\nNotes: ${order.notes}` : null,
     ].filter(Boolean);
 
@@ -287,40 +285,42 @@ export function Checkout() {
       return;
     }
 
+    const orderPayload = {
+      ...form,
+      items: cartItems.map((item) => ({
+        product: item.id,
+        title: item.title,
+        image: item.image,
+        price: item.price,
+        quantity: item.quantity,
+        color: item.color || "",
+        size: item.size || "",
+      })),
+      total,
+    };
+
+    // CRITICAL: open WhatsApp FIRST, synchronously, still directly inside
+    // the click handler — before any await. This is the exact same pattern
+    // CTA.jsx uses (which works correctly). Browsers only trust window.open
+    // as a real user action if nothing asynchronous happened first; once
+    // you await something before calling it, the browser treats it as an
+    // untrusted popup and routes it through the api.whatsapp.com
+    // confirmation page instead of deep-linking straight into the app.
+    const message = encodeURIComponent(buildWhatsAppMessage(orderPayload));
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    window.open(whatsappUrl, "_blank");
+
+    // Now save the order in the background — this no longer affects
+    // whether WhatsApp opens correctly.
     setIsSubmitting(true);
     try {
-      const orderPayload = {
-        ...form,
-        items: cartItems.map((item) => ({
-          product: item.id,
-          title: item.title,
-          image: item.image,
-          price: item.price,
-          quantity: item.quantity,
-          color: item.color || "",
-          size: item.size || "",
-        })),
-        total,
-      };
-
-      // Save the order to your database first — this is your permanent
-      // record, independent of whether the customer actually sends the
-      // WhatsApp message or not.
-      const response = await axiosInstance.post("/api/order/create", orderPayload);
-      const savedOrder = response.data.order;
-
-      // Then open WhatsApp with the order pre-filled, so the customer just
-      // has to hit send.
-      const message = encodeURIComponent(buildWhatsAppMessage(savedOrder));
-      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-      window.open(whatsappUrl, "_blank");
-
+      await axiosInstance.post("/api/order/create", orderPayload);
       toast.success("Order saved! Complete it by sending the WhatsApp message.");
       dispatch(clearCart());
       setForm({ customerName: "", phone: "", city: "", address: "", notes: "" });
     } catch (err) {
       console.error("Error submitting order:", err);
-      toast.error("Failed to submit order. Please try again.");
+      toast.error("Order sent to WhatsApp, but saving it failed — please still send the message.");
     } finally {
       setIsSubmitting(false);
     }
@@ -345,13 +345,13 @@ export function Checkout() {
               {item.size ? ` - Size ${item.size}` : ""} × {item.quantity}
             </span>
             <span className="text-[#1A1A1A] font-medium">
-              ${(item.price * item.quantity).toFixed(2)}
+              {(item.price * item.quantity).toFixed(2)} DH
             </span>
           </div>
         ))}
         <div className="flex justify-between pt-3 border-t border-[#C9A24B]/20 font-semibold text-[#1A1A1A]">
           <span>Total</span>
-          <span>${total.toFixed(2)}</span>
+          <span>{total.toFixed(2)} DH</span>
         </div>
       </div>
 
