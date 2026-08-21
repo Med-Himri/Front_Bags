@@ -127,7 +127,7 @@ export function Footer() {
                     className="text-[#D4AF37] shrink-0 mt-0.5"
                   />
                   <span>
-                    Casablanca, Morocco <br />
+                    Tanger, Morocco <br />
                     <span className="text-[10px] opacity-60">
                       Private Showroom
                     </span>
