@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { CheckCircle } from "lucide-react";
 import AddToCartButton from "@/components/cart/AddToCartButton";
+import BuyNowButton from "@/components/cart/BuyNowButton";
 
 export function ProductPurchaseBox({ product }) {
   const variants = product.variants || [];
@@ -17,7 +18,7 @@ export function ProductPurchaseBox({ product }) {
   // the simple stock flag on the product itself.
   const isOverallAvailable = hasVariants
     ? variants.some((v) => v.available !== false && v.stock > 0)
-    : product.stock === "in_stock"; 
+    : product.stock === "in_stock";
 
   const needsSelection = hasVariants && !selectedVariant;
 
@@ -93,12 +94,21 @@ export function ProductPurchaseBox({ product }) {
         </div>
       )}
 
-      <div className="pt-2 max-w-md">
-        <AddToCartButton
-          product={product}
-          selectedVariant={selectedVariant}
-          disabled={needsSelection}
-        />
+      <div className="pt-2 max-w-xl flex flex-col sm:flex-row gap-3">
+        <div className="flex-1">
+          <AddToCartButton
+            product={product}
+            selectedVariant={selectedVariant}
+            disabled={needsSelection}
+          />
+        </div>
+        <div className="flex-1">
+          <BuyNowButton
+            product={product}
+            selectedVariant={selectedVariant}
+            disabled={needsSelection}
+          />
+        </div>
       </div>
     </div>
   );

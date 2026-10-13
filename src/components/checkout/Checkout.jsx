@@ -6,10 +6,8 @@
 // import { toast } from "react-toastify";
 // import { MessageCircle, Loader2 } from "lucide-react";
 // import axiosInstance from "@/utils/axiosInstance";
-// import { clearCart } from "@/redux/slices/cartSlice"; // adjust action name if different
+// import { clearCart } from "@/redux/slices/cartSlice";
 
-// // Your business WhatsApp number in international format, no +, no spaces
-// // e.g. Morocco number 06 12 34 56 78 becomes "212612345678"
 // const WHATSAPP_NUMBER = "212619805905";
 
 // export function Checkout() {
@@ -68,40 +66,42 @@
 //       return;
 //     }
 
+//     const orderPayload = {
+//       ...form,
+//       items: cartItems.map((item) => ({
+//         product: item.id,
+//         title: item.title,
+//         image: item.image,
+//         price: item.price,
+//         quantity: item.quantity,
+//         color: item.color || "",
+//         size: item.size || "",
+//       })),
+//       total,
+//     };
+
+//     // CRITICAL: open WhatsApp FIRST, synchronously, still directly inside
+//     // the click handler — before any await. This is the exact same pattern
+//     // CTA.jsx uses (which works correctly). Browsers only trust window.open
+//     // as a real user action if nothing asynchronous happened first; once
+//     // you await something before calling it, the browser treats it as an
+//     // untrusted popup and routes it through the api.whatsapp.com
+//     // confirmation page instead of deep-linking straight into the app.
+//     const message = encodeURIComponent(buildWhatsAppMessage(orderPayload));
+//     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+//     window.open(whatsappUrl, "_blank");
+
+//     // Now save the order in the background — this no longer affects
+//     // whether WhatsApp opens correctly.
 //     setIsSubmitting(true);
 //     try {
-//       const orderPayload = {
-//         ...form,
-//         items: cartItems.map((item) => ({
-//           product: item.id,
-//           title: item.title,
-//           image: item.image,
-//           price: item.price,
-//           quantity: item.quantity,
-//           color: item.color || "",
-//           size: item.size || "",
-//         })),
-//         total,
-//       };
-
-//       // Save the order to your database first — this is your permanent
-//       // record, independent of whether the customer actually sends the
-//       // WhatsApp message or not.
-//       const response = await axiosInstance.post("/api/order/create", orderPayload);
-//       const savedOrder = response.data.order;
-
-//       // Then open WhatsApp with the order pre-filled, so the customer just
-//       // has to hit send.
-//       const message = encodeURIComponent(buildWhatsAppMessage(savedOrder));
-//       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-//       window.open(whatsappUrl, "_blank");
-
+//       await axiosInstance.post("/api/order/create", orderPayload);
 //       toast.success("Order saved! Complete it by sending the WhatsApp message.");
 //       dispatch(clearCart());
 //       setForm({ customerName: "", phone: "", city: "", address: "", notes: "" });
 //     } catch (err) {
 //       console.error("Error submitting order:", err);
-//       toast.error("Failed to submit order. Please try again.");
+//       toast.error("Order sent to WhatsApp, but saving it failed — please still send the message.");
 //     } finally {
 //       setIsSubmitting(false);
 //     }
@@ -132,7 +132,7 @@
 //         ))}
 //         <div className="flex justify-between pt-3 border-t border-[#C9A24B]/20 font-semibold text-[#1A1A1A]">
 //           <span>Total</span>
-//           <span>${total.toFixed(2)}</span>
+//           <span>{total.toFixed(2)} DH</span>
 //         </div>
 //       </div>
 
@@ -218,14 +218,20 @@
 //     </div>
 //   );
 // }
+
 "use client";
 
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { MessageCircle, Loader2 } from "lucide-react";
+import { MessageCircle, Loader2, Plus, Minus, Trash2 } from "lucide-react";
 import axiosInstance from "@/utils/axiosInstance";
-import { clearCart } from "@/redux/slices/cartSlice";
+import {
+  clearCart,
+  increaseQty,
+  decreaseQty,
+  removeFromCart,
+} from "@/redux/slices/cartSlice";
 
 const WHATSAPP_NUMBER = "212619805905";
 
@@ -337,18 +343,62 @@ export function Checkout() {
 
       {/* Order Summary */}
       <div className="bg-[#F9F6F0] rounded-2xl p-5 mb-8 space-y-3 border border-[#C9A24B]/20">
-        {cartItems.map((item, i) => (
-          <div key={i} className="flex justify-between text-sm">
-            <span className="text-[#1A1A1A]">
-              {item.title}
-              {item.color ? ` (${item.color})` : ""}
-              {item.size ? ` - Size ${item.size}` : ""} × {item.quantity}
-            </span>
-            <span className="text-[#1A1A1A] font-medium">
-              {(item.price * item.quantity).toFixed(2)} DH
-            </span>
-          </div>
-        ))}
+        {cartItems.length === 0 && (
+          <p className="text-sm text-[#1A1A1A]/60 text-center py-4">
+            Your cart is empty.
+          </p>
+        )}
+        {cartItems.map((item) => {
+          const key = `${item.id}__${item.color || ""}__${item.size || ""}`;
+          return (
+            <div key={key} className="flex items-center justify-between gap-3 text-sm">
+              <div className="min-w-0">
+                <p className="text-[#1A1A1A] font-medium truncate">{item.title}</p>
+                {(item.color || item.size) && (
+                  <p className="text-[11px] text-[#C9A24B] font-semibold uppercase tracking-wide">
+                    {[item.color, item.size && `Size ${item.size}`].filter(Boolean).join(" · ")}
+                  </p>
+                )}
+                {/* Quantity: choose 2, 3 or more right here */}
+                <div className="flex items-center gap-1 mt-2 bg-white border border-[#C9A24B]/30 rounded-full p-0.5 w-fit">
+                  <button
+                    type="button"
+                    onClick={() => dispatch(decreaseQty(key))}
+                    disabled={item.quantity <= 1}
+                    aria-label="Decrease quantity"
+                    className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#F9F6F0] disabled:opacity-30 transition-colors"
+                  >
+                    <Minus size={13} />
+                  </button>
+                  <span className="w-7 text-center text-xs font-bold text-[#1A1A1A]">
+                    {item.quantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => dispatch(increaseQty(key))}
+                    aria-label="Increase quantity"
+                    className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#F9F6F0] transition-colors"
+                  >
+                    <Plus size={13} />
+                  </button>
+                </div>
+              </div>
+              <div className="flex flex-col items-end gap-2 shrink-0">
+                <span className="text-[#1A1A1A] font-medium">
+                  {(item.price * item.quantity).toFixed(2)} DH
+                </span>
+                <button
+                  type="button"
+                  onClick={() => dispatch(removeFromCart(key))}
+                  aria-label={`Remove ${item.title}`}
+                  className="text-[#1A1A1A]/40 hover:text-red-500 transition-colors"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            </div>
+          );
+        })}
         <div className="flex justify-between pt-3 border-t border-[#C9A24B]/20 font-semibold text-[#1A1A1A]">
           <span>Total</span>
           <span>{total.toFixed(2)} DH</span>
